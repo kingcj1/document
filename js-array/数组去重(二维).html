@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let res = [
+      {data:[{id:"B"},{id:"C"}],},
+      {data:[{id:"D"},{id:"C"}]},
+      {data:[{id:"D"},{id:"B"},{id:"A"},{id:"C"}],},
+    ]
+    let obj = {},arrVal=[];
+    res.map((e, index) => {
+      e.data.map((item, idx) => {
+        if (obj[item.id]) {
+          obj[item.id] += `${index}${idx},`
+        } else obj[item.id] = `${index}${idx},`
+      });
+    })
+    for(let key in obj){
+      let values = obj[key].substr(0,(obj[key].length-1));
+      let arr = values.split(',');
+      arr.splice(0,1);
+      arrVal.push(...arr);
+    }
+    arrVal.sort((a,b)=>b-a)
+    arrVal.map(item=>{
+      let arrOutIdx = item[0];
+      let arrInIdx = item[1];
+      res[arrOutIdx].data.splice(arrInIdx,1);
+    })
+    console.log(res);
+    console.log(obj);
+  </script>
+</body>
+
+</html>
